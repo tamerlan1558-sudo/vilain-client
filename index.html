@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vilain — бесплатный клиент для Minecraft 1.21.4</title>
+<meta name="description" content="Vilain — бесплатный клиент для Minecraft 1.21.4 (Fabric). Скачай лоадер, нажми Play — остальное он сделает сам.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050505;--card:#0c0c0d;--line:#1d1d20;--text:#f4f4f5;--mute:#8d8d94;--dim:#5b5b62}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{font:16px/1.6 Inter,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(60% 40% at 50% 0%,#1a1a1d,transparent 70%),linear-gradient(#ffffff06 1px,transparent 1px) 0 0/64px 64px,linear-gradient(90deg,#ffffff06 1px,transparent 1px) 0 0/64px 64px;-webkit-mask:linear-gradient(#000 40%,transparent);mask:linear-gradient(#000 40%,transparent)}
+a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+main{overflow-x:clip}
+/* nav */
+nav{position:sticky;top:0;z-index:10;backdrop-filter:blur(14px);background:#050505b8;border-bottom:1px solid var(--line)}
+nav .wrap{height:64px;display:flex;align-items:center;gap:28px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.2px}
+.brand img{height:26px}
+.links{display:flex;gap:24px;margin-left:12px;color:var(--mute);font-size:14px;flex:1}
+.links a:hover{color:var(--text)}
+.lang{display:flex;padding:3px;border:1px solid var(--line);border-radius:10px;font-size:12px;font-weight:600}
+.lang button{padding:4px 10px;border-radius:7px;color:var(--mute)}.lang button.on{background:#fff;color:#000}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 24px;border-radius:14px;font-weight:600;font-size:15px;transition:.2s}
+.btn.main{background:linear-gradient(#fff,#d6d6d9);color:#000;box-shadow:0 0 0 1px #fff3,0 10px 40px #ffffff1f}
+.btn.main:hover{transform:translateY(-2px);box-shadow:0 0 0 1px #fff5,0 14px 50px #ffffff33}
+.btn.ghost{border:1px solid var(--line);background:#0c0c0d}.btn.ghost:hover{border-color:#3a3a40;background:#141416}
+.btn.sm{height:38px;padding:0 16px;font-size:14px;border-radius:11px}
+/* hero */
+.hero{padding:88px 0 96px;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid var(--line);border-radius:99px;font-size:13px;color:var(--mute);background:#0c0c0d}
+.pill i{width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff}
+h1{font-size:clamp(48px,8vw,92px);line-height:1;font-weight:800;letter-spacing:-3px;margin:22px 0 20px;background:linear-gradient(#fff 30%,#77777e);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:19px;color:var(--mute);max-width:480px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin:34px 0 18px}
+.meta{display:flex;gap:18px;flex-wrap:wrap;color:var(--dim);font-size:13px}
+.meta span{display:flex;align-items:center;gap:6px}.meta svg{width:14px;height:14px}
+.shot{position:relative;display:grid;place-items:center}
+.shot::before{content:"";position:absolute;width:520px;height:520px;max-width:120%;background:radial-gradient(circle,#ffffff2e,transparent 62%);filter:blur(10px)}
+.shot img.ui{position:relative;z-index:1;width:min(400px,100%);border-radius:18px;box-shadow:0 40px 100px #000,0 0 0 1px #ffffff12;animation:float 6s ease-in-out infinite}
+.mark{width:84px;height:84px;border-radius:22px;display:grid;place-items:center;margin-bottom:26px;background:radial-gradient(circle at 50% 25%,#2c2c30,#0c0c0d 70%);border:1px solid #2a2a2e;box-shadow:0 0 70px #ffffff14,inset 0 1px #ffffff14}
+.mark img{height:58px}
+@media(max-width:900px){.mark{margin-left:auto;margin-right:auto}}
+
+@keyframes float{50%{transform:translateY(-10px)}}
+/* sections */
+section{padding:72px 0}
+.eyebrow{color:var(--mute);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase}
+h2{font-size:clamp(30px,4vw,44px);letter-spacing:-1.2px;line-height:1.1;margin:10px 0 40px}
+.grid3,.grid4{display:grid;gap:16px}
+.grid3{grid-template-columns:repeat(3,1fr)}.grid4{grid-template-columns:repeat(4,1fr)}
+.card{padding:26px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(#101012,#09090a);transition:.25s}
+.card:hover{border-color:#34343a;transform:translateY(-4px)}
+.card .n{font-size:13px;color:var(--dim);font-weight:600;letter-spacing:1px}
+.card .ic{width:42px;height:42px;border-radius:12px;background:#17171a;border:1px solid var(--line);display:grid;place-items:center;margin-bottom:18px}
+.card h3{font-size:18px;margin:12px 0 6px;letter-spacing:-.3px}.card .ic+h3{margin-top:0}
+.card p{color:var(--mute);font-size:14.5px}
+.final{text-align:center;padding:84px 24px;border:1px solid var(--line);border-radius:28px;background:radial-gradient(60% 90% at 50% 0%,#1c1c1f,#080809)}
+.final h2{margin-bottom:12px}.final p{color:var(--mute);margin-bottom:30px}
+footer{border-top:1px solid var(--line);margin-top:72px;padding:36px 0;color:var(--dim);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer p{max-width:560px}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}.reveal.in{opacity:1;transform:none}
+@media(max-width:900px){.hero{grid-template-columns:1fr;padding:56px 0;text-align:center}.lead{margin:0 auto}.cta,.meta{justify-content:center}.grid3{grid-template-columns:1fr}.grid4{grid-template-columns:1fr 1fr}.links{display:none}nav .wrap{justify-content:space-between}}
+@media(max-width:520px){.grid4{grid-template-columns:1fr}nav .btn{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="brand" href="#top"><img src="assets/logo.png" alt="Vilain">Vilain</a>
+  <div class="links"><a href="#how" data-t="nav1">Как начать</a><a href="#features" data-t="nav2">Возможности</a></div>
+  <div class="lang"><button data-l="ru" class="on">RU</button><button data-l="en">EN</button></div>
+  <a class="btn main sm" data-dl href="#"><span data-t="dl">Скачать лоадер</span></a>
+</div></nav>
+
+<main id="top" class="wrap">
+  <header class="hero">
+    <div>
+      <div class="mark"><img src="assets/logo.png" alt="Vilain"></div>
+      <span class="pill"><i></i><span data-t="pill">Minecraft 1.21.4 · Fabric</span></span>
+      <h1>Vilain</h1>
+      <p class="lead" data-t="lead">Бесплатный клиент для Minecraft. Скачай лоадер, нажми Play — Java, Fabric и сам клиент он поставит за тебя.</p>
+      <div class="cta">
+        <a class="btn main" data-dl href="#"><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg><span data-t="dl">Скачать лоадер</span></a>
+        <a class="btn ghost" data-discord href="#"><svg viewBox="0 0 24 24"><path d="M7 8c3-1.5 7-1.5 10 0 2 3 3 6 3 9-1.5 1.2-3 1.8-4.5 2l-1-1.7M7 8C5 11 4 14 4 17c1.5 1.200 3 1.800 4.500 2l1-1.700"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/></svg>Discord</a>
+      </div>
+      <div class="meta">
+        <span><svg viewBox="0 0 24 24"><path d="M4 5l7-1v8H4zM13 3.800L20 3v9h-7zM4 14h7v8l-7-1zM13 14h7v8l-7-1z"/></svg><span data-t="m1">Windows 10 / 11</span></span>
+        <span><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg><span data-t="m2">Бесплатно</span></span>
+        <span><svg viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/></svg><span data-t="m3">Автообновление</span></span>
+      </div>
+    </div>
+    <div class="shot">
+      <img class="ui" src="assets/launcher.png" alt="Лоадер Vilain">
+    </div>
+  </header>
+
+  <section id="how" class="reveal">
+    <span class="eyebrow" data-t="how">Как начать</span>
+    <h2 data-t="how2">Три шага до игры</h2>
+    <div class="grid3">
+      <div class="card"><span class="n">01</span><h3 data-t="s1">Скачай лоадер</h3><p data-t="s1p">Нажми кнопку «Скачать лоадер» — exe-файл сразу начнёт загружаться.</p></div>
+      <div class="card"><span class="n">02</span><h3 data-t="s2">Введи ник</h3><p data-t="s2p">Запусти лоадер и войди под своим ником. Пароль не нужен.</p></div>
+      <div class="card"><span class="n">03</span><h3 data-t="s3">Нажми Play</h3><p data-t="s3p">Лоадер сам докачает всё нужное и запустит Minecraft с клиентом.</p></div>
+    </div>
+  </section>
+
+  <section id="features" class="reveal">
+    <span class="eyebrow" data-t="ft">Возможности</span>
+    <h2 data-t="ft2">Просто работает</h2>
+    <div class="grid4">
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.600 5.600 6 .700-4.500 4.100 1.200 6L12 16.500 6.700 19.400l1.200-6L3.400 9.300l6-.700z"/></svg></div><h3 data-t="f1">Бесплатно</h3><p data-t="f1p">Без подписок и скрытых платежей.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg></div><h3 data-t="f2">Автоустановка</h3><p data-t="f2p">Java, Fabric и клиент скачиваются сами при первом запуске.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 3l18 18M10 6a9 9 0 0 1 11 6 9 9 0 0 1-3 3.500M6 8.500A9 9 0 0 0 3 12s4 7 9 7a8 8 0 0 0 3-.6"/></svg></div><h3 data-t="f3">Режим стримера</h3><p data-t="f3p">Скрывает лишнее, пока ты ведёшь трансляцию.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 11v2M11 11v2M15 11v2"/></svg></div><h3 data-t="f4">Своя память</h3><p data-t="f4p">Выбирай, сколько ОЗУ отдать игре, прямо в настройках.</p></div>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="final">
+      <h2 data-t="end">Готов играть?</h2>
+      <p data-t="endp">Скачай лоадер — это займёт меньше минуты.</p>
+      <a class="btn main" data-dl href="#"><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg><span data-t="dl">Скачать лоадер</span></a>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  <div class="brand"><img src="assets/logo.png" alt="" style="height:22px">Vilain</div>
+  <p data-t="legal">Vilain не связан с Mojang Studios и Microsoft. Minecraft — торговая марка Mojang Synergies AB.</p>
+</div></footer>
+
+<script>
+/* ====== НАСТРОЙ ЗДЕСЬ ====== */
+const DOWNLOAD_URL = 'https://github.com/tamerlan1558-sudo/vilain-client/releases/latest/download/Vilain.exe'; // прямая ссылка на exe
+const DISCORD_URL  = '#';                                                               // ссылка-приглашение в Discord
+/* =========================== */
+document.querySelectorAll('[data-dl]').forEach(a=>{a.href=DOWNLOAD_URL;a.setAttribute('download','Vilain.exe')});
+document.querySelectorAll('[data-discord]').forEach(a=>{a.href=DISCORD_URL;if(DISCORD_URL==='#')a.style.display='none'});
+
+const T={en:{nav1:'Get started',nav2:'Features',dl:'Download loader',pill:'Minecraft 1.21.4 · Fabric',lead:'A free Minecraft client. Download the loader, hit Play — it installs Java, Fabric and the client for you.',m1:'Windows 10 / 11',m2:'Free',m3:'Auto-updates',how:'Get started',how2:'Three steps to play',s1:'Download the loader',s1p:'Press "Download loader" — the exe starts downloading right away.',s2:'Enter your nickname',s2p:'Open the loader and sign in with your nickname. No password needed.',s3:'Press Play',s3p:'The loader fetches everything it needs and launches Minecraft with the client.',ft:'Features',ft2:'It just works',f1:'Free',f1p:'No subscriptions, no hidden payments.',f2:'Auto-install',f2p:'Java, Fabric and the client download themselves on first launch.',f3:'Streamer mode',f3p:'Hides the extras while you stream.',f4:'Your own memory',f4p:'Choose how much RAM the game gets, right in settings.',end:'Ready to play?',endp:'Download the loader — it takes less than a minute.',legal:'Vilain is not affiliated with Mojang Studios or Microsoft. Minecraft is a trademark of Mojang Synergies AB.'}};
+const RU={};document.querySelectorAll('[data-t]').forEach(e=>RU[e.dataset.t]=e.textContent);T.ru=RU;
+function setLang(l){document.documentElement.lang=l;document.querySelectorAll('[data-t]').forEach(e=>e.textContent=T[l][e.dataset.t]);document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));try{localStorage.lang=l}catch{}}
+document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>setLang(b.dataset.l));
+try{if(localStorage.lang==='en')setLang('en')}catch{}
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
+</script>
+</body>
+</html>
